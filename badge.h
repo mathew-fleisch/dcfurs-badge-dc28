@@ -72,6 +72,7 @@ struct framebuf {
 
 struct framebuf *framebuf_alloc(void);
 void framebuf_free(struct framebuf *frame);
+void framebuf_console(const struct framebuf *frame);
 void framebuf_render(const struct framebuf *frame);
 
 uint16_t hsv2pixel(unsigned int hue, uint8_t sat, uint8_t value);

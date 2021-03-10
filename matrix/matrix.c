@@ -7,14 +7,14 @@
 #include "badge.h"
 
 static const uint16_t colours[8] = {
-    0xF800, /* Red */
-    0xF300, /* Orange */
-    0xF5E0, /* Yellow */
-    0x07C0, /* Green */
-    0x07FF, /* Cyan */
-    0x001F, /* Blue */
-    0x7817, /* Purple */
-    0xFFFF  /* White */
+    0xF800, /* Red: int(63488) */
+    0xF300, /* Orange: int(62208) */
+    0xF5E0, /* Yellow: int(62944) */
+    0x07C0, /* Green: int(1984) */
+    0x07FF, /* Cyan: int(2047) */
+    0x001F, /* Blue: int(31) */
+    0x7817, /* Purple: int(30743) */
+    0xFFFF  /* White: int(65535) */
 };
 
 void main(void)
@@ -65,18 +65,21 @@ void main(void)
         }
 
         /* Redraw the frame */
+
         buf = frames[counter & 1];
         for (x = 0; x < DISPLAY_HRES; x++) {
             uint8_t *column = state[x];
             for (y = 0; y < DISPLAY_VRES; y++) {
                 uint16_t value;
                 if (column[y] == 0xff) value = colours[rand() & 0x7];
+                // if (column[y] == 0xff) value = colours[3]; // Force green
                 else if (column[y]) value = (column[y] & 0xFC) << 3;
                 else value = (3 << 5);
 
                 buf->data[y * DISPLAY_HWIDTH + x] = value;
             }
         }
+        framebuf_console(buf);
         framebuf_render(buf);
 
         /* Wait for some time */
