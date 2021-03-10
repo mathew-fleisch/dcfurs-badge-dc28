@@ -21,4 +21,16 @@ brew install riscv-gnu-toolchain --with-multilib
 echo "Install (pip) dependencies"
 pip3 install Image
 
-
+# Useful commands:
+#   - Build and upload:
+#     `./make.py build && ./make.py upload`
+#
+#   - Screen into console
+#     `screen /dev/tty.usb[tab-to-get-device-id]`
+#
+#   - Quit out of screen session
+#     `screen -X -S $(screen -ls | grep tty | awk '{print $1}') quit`
+#
+#   - Sometimes quitting out of screen sessions screws up the terminal formatting
+#     Use this to fix the formatting issues:
+#     `stty sane`
