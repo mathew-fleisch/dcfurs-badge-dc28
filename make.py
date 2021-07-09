@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/local/bin/python3
 import os
 import sys
 import json
@@ -13,11 +13,12 @@ srcdir = os.path.dirname(os.path.abspath(__file__))
 ldsfile = os.path.join(srcdir,'animation.lds')
 
 # The list of animations to build.
-animations = ['marquee-image',
+animations = ['matrix',
+              'hello-world',
+              'marquee-image',
               'lineface',
               'djmode',
               'mic-test',
-              'matrix',
               'missingno',
               'northern-lights',
               'lightning-voice',

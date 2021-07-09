@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "badge.h"
 
 union framelist {
@@ -50,6 +51,31 @@ framebuf_free(struct framebuf *frame)
     if (frame) {
         entry->next = frame_free_list;
         frame_free_list = entry;
+    }
+}
+
+
+/* Display a frame buffer in console */
+void framebuf_console(const struct framebuf *frame) {
+    int x, y;
+    printf("\e[1;1H\e[2J");
+    for (y = 0; y < DISPLAY_VRES; y++) {
+        for (x = 0; x < DISPLAY_HRES; x++) {
+            uint16_t value;
+            value = frame->data[y * DISPLAY_HWIDTH + x];
+            if (value == 96 || value == 0) printf(" . ");
+            else {
+                if (value >= 0x001F && value < 100) printf("\033[0;34m"); // Blue
+                else if (value >= 500 && value < 0x07FF) printf("\033[0;32m"); // Green
+                else if (value >= 0x07FF && value < 0x7817) printf("\033[0;36m"); // Cyan
+                else if (value >= 0x7817 && value < 0xF5E0) printf("\033[0;35m"); // Purple
+                else if (value >= 0xF5E0 && value < 0xF800) printf("\033[0;33m"); // Yellow
+                else if (value >= 0xF800 && value < 0xFFFF) printf("\033[0;31m"); // Red
+                else if (value >= 0xFFFF) printf("\033[0;37m"); // white
+                printf(" x \033[0m");
+            }
+        }
+        printf("\n");
     }
 }
 
